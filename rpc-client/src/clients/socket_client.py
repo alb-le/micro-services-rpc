@@ -1,13 +1,15 @@
 import socket
 from typing import Tuple
+import config
 
 
-class Client:
+class SocketClient:
     def __init__(self, host: str,
                  port: int,
                  ):
         self.socket: socket.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__address = (host, port)
+        self._server_address = (host, config.SERVER_PORT)
 
     def __str__(self):
         return f'{self.__address[0]}:{self.__address[1]}'

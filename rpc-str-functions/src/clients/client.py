@@ -1,6 +1,5 @@
 import socket
 from typing import Tuple
-import config
 
 
 class Client:

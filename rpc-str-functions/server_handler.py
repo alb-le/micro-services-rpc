@@ -1,13 +1,13 @@
 import config
 from src.clients.server_client import ServerClient
 from src.server_functions import FunctionsImplementation
-from src.rcp_server import RcpServer
+from src.rpc_server import RpcServer
 
 
 def server_handler():
-    client = ServerClient(host=config.HOST, port=config.SERVER_PORT)
+    client = ServerClient(host=config.HOST, port=config.PORT)
     fn = FunctionsImplementation()
-    RcpServer(client=client, my_functions=fn).run()
+    RpcServer(client=client, my_functions=fn).run()
 
 
 if __name__ == "__main__":

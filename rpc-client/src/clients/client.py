@@ -1,25 +1,20 @@
-import socket
-from typing import Tuple
+import json
+
 import config
+from src.clients.socket_client import SocketClient
 
 
-class Client:
-    def __init__(self, host: str,
-                 port: int,
-                 ):
-        self.socket: socket.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__address = (host, port)
+class Client(SocketClient):
+    def __init__(self, host: str, port: int):
+        super().__init__(host, port)
+        self.server_address = (host, config.SERVER_PORT)
 
-    def __str__(self):
-        return f'{self.__address[0]}:{self.__address[1]}'
+    def handshake(self):
+        adds = self.server_address
+        print(f'server address: {adds}')
+        self.socket.connect(self.server_address)
 
-    def start_listening(self):
-        self.socket.bind(self.__address)
-        self.socket.listen()
-        print(f'+ Server {self.__str__()} started.')
-
-    def accept(self) -> Tuple[socket.socket, Tuple[str, int]]:
-        return self.socket.accept()
-
-    def close(self):
-        self.socket.close()
+    def call_fn(self, fn_name, args, kwargs):
+        self.socket.sendall(json.dumps((fn_name, args, kwargs)).encode())
+        res = self.socket.recv(config.MSG_SIZE).decode()
+        return json.loads(res)

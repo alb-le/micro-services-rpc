@@ -1,0 +1,29 @@
+services:
+
+  client:
+    build: .
+    image: albertoleao/rpc-client:latest
+    port: 8080:80
+    environment:
+      - PORT=80
+
+  proxy-server:
+    build: .
+    image: albertoleao/rpc-proxy-server:latest
+    port: 8081:81
+    environment:
+      - PORT=81
+
+  num-service:
+    build: .
+    image: albertoleao/rpc-client:latest
+    port: 8082:82
+    environment:
+      - PORT=82
+
+  str-service:
+    build: .
+    image: albertoleao/rpc-client:latest
+    port: 8083:83
+    environment:
+      - PORT=83
