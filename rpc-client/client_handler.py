@@ -1,16 +1,12 @@
-from typing import Tuple, Optional
 
-import config
-from src.clients.client import Client
-from src.rcp_client import RcpClient
+from src.rcp_client import RcpClientController
 
 
 def client_handler():
-    host = config.HOST
-    port = config.PORT
-
-    client = Client(host, config.SERVER_PORT)
-    RcpClient(client=client).run()
+    connected = True
+    rpc_client
+    while connected:
+        RcpClientController().run()
 
 
 if __name__ == "__main__":

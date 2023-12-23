@@ -2,7 +2,7 @@ import config
 from src.clients.client import Client
 
 
-class RcpClient:
+class RcpClientController:
     def __init__(self, client: Client):
         self.client = client
 
