@@ -1,19 +1,26 @@
 services:
-  web:
-    proxy-server:
-      build: ./rpc-proxy-server
-      port: 5051
+  proxy-server:
+    build: ./rpc-proxy-server
+    ports:
+      - 5051
+    hostname: proxy-server
 
-    num-service:
-      build: ./rpc-num-service
-      port: 5052
+  num-service:
+    build: ./rpc-num-service
+    ports:
+      - 5052
+    hostname: num-service
 
-    str-service:
-      build: ./rpc-str-service
-      port: 5053
+  str-service:
+    build: ./rpc-str-service
+    ports: 
+      - 5053
+    hostname: str-service
 
-    client:
-      build: ./rpc-client
-      port: 5050
-      stdin_open: true # docker run -i
-      tty: true        # docker run -t
+  client:
+    build: ./rpc-client
+    ports:
+      - 5050
+    hostname: rpc-client
+#      stdin_open: true # docker run -i
+#      tty: true        # docker run -t
