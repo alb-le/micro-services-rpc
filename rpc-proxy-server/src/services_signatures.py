@@ -89,10 +89,13 @@ class ServicesSignatures:
 
     @staticmethod
     def __call_num_service(fn_name, *args, **kwargs):
-        service_client = ServerClient(host=config.NUM_SERVICE_HOST, port=config.NUM_SERVICE_PORT)
+        host = config.NUM_SERVICE_HOST
+        port = config.NUM_SERVICE_PORT
+        print(f'[INFO] Creating connection for worker. Address: {host}:{port}')
+        service_client = ServerClient(host=host, port=port)
 
         try:
-            service_client.handshake(port=config.NUM_SERVICE_PORT)
+            service_client.handshake(port=port, host=host)
             res = service_client.call_fn(fn_name, args, kwargs)
             service_client.close()
 
@@ -106,10 +109,13 @@ class ServicesSignatures:
 
     @staticmethod
     def __call_str_service(self, fn_name, *args, **kwargs):
-        service_client = ServerClient(host=config.STR_SERVICE_HOST, port=config.STR_SERVICE_PORT)
+        host = config.STR_SERVICE_HOST
+        port = config.STR_SERVICE_HOST
+        print(f'[INFO] Creating connection for worker. Address: {host}:{port}')
+        service_client = ServerClient(host=host, port=port)
 
         try:
-            service_client.handshake(port=config.STR_SERVICE_PORT)
+            service_client.handshake(port=port, host=host)
             res = service_client.call_fn(fn_name, args, kwargs)
             service_client.close()
 

@@ -11,6 +11,9 @@ docker exec -it micro-services-rpc-client-1 python3 client_handler.py
 
 Usuly tha client container name is ```micro-services-rpc-client-1 ``` but it can change. To look up the container name, just run ```docker container ls```.
 
+## Video
+You can see a [video of the RPC in action](https://youtu.be/HKxhMgp4-vA).
+
 ## Intro
 This project originates from the 2023 Computer Network curse from UnB (Universidade de Brasília). It's divided in four
 different projects: an RPC Client, a Proxy Server and two servers to compute the requests.
