@@ -1,20 +1,7 @@
 # RPC service using a microservices architecture
-## How to
-To run this project, you should have installed the latest docker. Then, just run the following in the project root:
-```
-docker compose up
-```
-After docker finishes up, open the client:
-```
-docker exec -it <CLIENT CONTAINER NAME> python3 client_handler.py
-```
-
-Usuly tha client container name is ```micro-services-rpc-client-1 ```
-
-## Intro
 This project originates from the 2023 Computer Network curse from UnB (Universidade de Brasília). It's divided in four
-different projects: an RPC Client, a Proxy Server and two servers to compute the requests.
-
+different projects: an RPC Client, a Proxy Server and two servers to compute the requests. This project is dedicated to
+the numerical functions service.
 ## Motivation
 Containers are a technology similar to virtualization (VMWare, VirtualBox, QEMU, Hyper-V), but only
 the User part is virtualized, allowing the same system to behave like a range of systems,
