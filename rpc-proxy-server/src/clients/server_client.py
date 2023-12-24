@@ -7,7 +7,7 @@ from src.my_exception import DisconnectedException
 
 
 class ServerClient(Client):
-    def __init__(self, host: str = '127.0.0.1', port: int = 0):
+    def __init__(self, host: str = '0.0.0.0', port: int = 0):
         super().__init__(host, port)
 
     @staticmethod
@@ -33,7 +33,7 @@ class ServerClient(Client):
         worker_socket.close()
 
     def handshake(self, port: int, host: str = 'localhost'):
-        self.socket.connect((host, port))
+        self.server_client.connect((host, port))
 
     def call_fn(self, fn_name: str, args: tuple, kwargs: dict):
         args_s = ', '.join(args)
@@ -48,6 +48,6 @@ class ServerClient(Client):
 
         signature = f'{fn_name}({s})'
 
-        self.socket.sendall(json.dumps(signature).encode())
-        res = self.socket.recv(config.MSG_SIZE).decode()
+        self.server_client.sendall(json.dumps(signature).encode())
+        res = self.server_client.recv(config.MSG_SIZE).decode()
         return json.loads(res)

@@ -1,31 +1,19 @@
 services:
+  web:
+    proxy-server:
+      build: ./rpc-proxy-server
+      port: 5051
 
-  proxy-server:
-    build: ./rpc-proxy-server
-    port: 5051:5051
-    environment:
-      - PORT=5051
-      - NUM_SERVICE_PORT=5052
-      - STR_SERVICE_PORT=5053
+    num-service:
+      build: ./rpc-num-service
+      port: 5052
 
-  num-service:
-    build: ./rpc-num-service
-    port: 5052:5052
-    environment:
-      - PORT=5052
+    str-service:
+      build: ./rpc-str-service
+      port: 5053
 
-  str-service:
-    build: ./rpc-str-service
-    port: 5053:5053
-    environment:
-      - PORT=5053
-
-  client:
-    build: ./rpc-client
-    port: 5050:5050
-    environment:
-      - PORT=5050
-      - SERVER_PORT=5051
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
-    
+    client:
+      build: ./rpc-client
+      port: 5050
+      stdin_open: true # docker run -i
+      tty: true        # docker run -t

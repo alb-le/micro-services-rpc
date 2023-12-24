@@ -13,6 +13,22 @@ class RpcServer:
         self.client: ServerClient = client
         self.services = services
 
+    def run(self) -> None:
+        self.client.start_listening()
+        while True:
+            try:
+                client, address = self.client.accept()
+                Thread(target=self.__multithread_handler, args=[client, address]).start()
+
+            except KeyboardInterrupt:
+                self.client.close()
+                print(f'- Server {self.client} interrupted.')
+                break
+
+            except Exception as ex:
+                self.client.close()
+                raise ex
+
     def __multithread_handler(self, worker_socket: socket.socket, address: Tuple[str, int]):
         try:
             client_address = f'{address[0]}:{address[1]}'
@@ -38,19 +54,3 @@ class RpcServer:
 
         finally:
             self.client.close_worker_socket(worker_socket)
-
-    def run(self) -> None:
-        self.client.start_listening()
-        while True:
-            try:
-                client, address = self.client.accept()
-                Thread(target=self.__multithread_handler, args=[client, address]).start()
-
-            except KeyboardInterrupt:
-                self.client.close()
-                print(f'- Server {self.client} interrupted.')
-                break
-
-            except Exception as ex:
-                self.client.close()
-                raise ex

@@ -1,4 +1,3 @@
-import socket
 from typing import Any, Tuple, List, Dict, Optional
 
 import config
@@ -90,7 +89,7 @@ class ServicesSignatures:
 
     @staticmethod
     def __call_num_service(fn_name, *args, **kwargs):
-        service_client = ServerClient()
+        service_client = ServerClient(host=config.NUM_SERVICE_HOST, port=config.NUM_SERVICE_PORT)
 
         try:
             service_client.handshake(port=config.NUM_SERVICE_PORT)
@@ -107,7 +106,7 @@ class ServicesSignatures:
 
     @staticmethod
     def __call_str_service(self, fn_name, *args, **kwargs):
-        service_client = ServerClient()
+        service_client = ServerClient(host=config.STR_SERVICE_HOST, port=config.STR_SERVICE_PORT)
 
         try:
             service_client.handshake(port=config.STR_SERVICE_PORT)
