@@ -1,32 +1,31 @@
 services:
 
-  client:
-    build: .
-    image: albertoleao/rpc-client:latest
-    port: 5050:50
-    environment:
-      - PORT=50
-      - SERVER_PORT=51
-
   proxy-server:
-    build: .
-    image: albertoleao/rpc-proxy-server:latest
-    port: 5051:51
+    build: ./rpc-proxy-server
+    port: 5051:5051
     environment:
-      - PORT=51
-      - NUM_SERVICE_PORT=52
-      - STR_SERVICE_PORT=53
+      - PORT=5051
+      - NUM_SERVICE_PORT=5052
+      - STR_SERVICE_PORT=5053
 
   num-service:
-    build: .
-    image: albertoleao/rpc-num-service:latest
-    port: 5052:52
+    build: ./rpc-num-service
+    port: 5052:5052
     environment:
-      - PORT=52
+      - PORT=5052
 
   str-service:
-    build: .
-    image: albertoleao/rpc-str-service:latest
-    port: 5053:53
+    build: ./rpc-str-service
+    port: 5053:5053
     environment:
-      - PORT=53
+      - PORT=5053
+
+  client:
+    build: ./rpc-client
+    port: 5050:5050
+    environment:
+      - PORT=5050
+      - SERVER_PORT=5051
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    

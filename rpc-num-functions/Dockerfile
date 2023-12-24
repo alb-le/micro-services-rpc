@@ -1,5 +1,6 @@
 FROM ubuntu:latest
 RUN apt update && apt install -y python3
-EXPOSE 8082:8082
-COPY . /rpc-num-fn
-CMD python3 ./rpc-num-fn/server_handler.py
+WORKDIR /rpc-num-fn
+COPY . .
+EXPOSE 5052:5052
+CMD python3 server_handler.py

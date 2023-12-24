@@ -1,4 +1,3 @@
-import config
 from src.clients.client import Client
 
 
@@ -6,36 +5,36 @@ class RcpClientController:
     def __init__(self, client: Client):
         self.client = client
 
-    def run(self):
-        running = True
+    def run(self, i: str) -> str:
         self.client.handshake()
-        print(f'Started RCP as Client. Address: {self.client}')
-        print(f'Write a request. You might try "help()" or "exit():"')
+        print(f'Started RCP as Client. Server address: {self.client}')
 
-        while running:
-            try:
-                self.__run()
+        if i in 'exit':
+            self.client.close()
+            print(f'[INFO] Bye.')
+            return
 
-            except KeyboardInterrupt:
-                self.client.close()
-                print(f'[INFO] Server {self.client} interrupted.')
-                break
+        try:
+            return self.__run(i)
 
-            except Exception as ex:
-                print(f'[ERROR] Closing client because of an error:')
-                self.client.close()
-                raise ex
+        except KeyboardInterrupt:
+            self.client.close()
+            print(f'[INFO] Server {self.client} interrupted.')
 
-    def __run(self):
-        user_input = self.__get_input()
+        except Exception as ex:
+            print(f'[ERROR] Closing client because of an error:')
+            self.client.close()
+            raise ex
+
+    def __run(self, i: str) -> str:
+        user_input = self.__get_input(i)
         fn_name, args, kwargs = user_input
 
         res = self.client.call_fn(fn_name, args, kwargs)
-        print(res)
+        return res
 
     @staticmethod
-    def __get_input():
-        s = input()
+    def __get_input(s: str):
         fn_name = s.split('(')[0]
         args = s[len(fn_name)+1:-1].strip(' ').split(',')
         kwargs = {}
