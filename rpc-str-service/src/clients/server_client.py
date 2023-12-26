@@ -7,13 +7,13 @@ from src.my_exception import DisconnectedException
 
 
 class ServerClient(Client):
-    def __init__(self, host: str = '127.0.0.1', port: int = 0):
+    def __init__(self, host: str = "127.0.0.1", port: int = 0):
         super().__init__(host, port)
 
     @staticmethod
     def get_address(socket_: socket.socket) -> str:
         socket_address = socket_.getsockname()
-        return f'{socket_address[0]}:{socket_address[1]}'
+        return f"{socket_address[0]}:{socket_address[1]}"
 
     @staticmethod
     def send(socket_: socket.socket, payload: str):
@@ -25,12 +25,13 @@ class ServerClient(Client):
         if not res:
             raise DisconnectedException
         res_obj = json.loads(res)
-        print(f'[DEBUG] Response: {res_obj}')
+        print(f"[DEBUG] Response: {res_obj}")
         return res_obj
 
     @staticmethod
     def close_worker_socket(worker_socket: socket.socket):
         worker_socket.close()
+
 
 #    def handshake(self, port: int, host: str = 'localhost'):
 #        self.server_client.connect((host, port))

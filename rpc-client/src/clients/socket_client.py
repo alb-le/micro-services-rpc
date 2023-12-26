@@ -3,9 +3,11 @@ from typing import Tuple
 
 
 class SocketClient:
-    def __init__(self, host: str,
-                 port: int,
-                 ):
+    def __init__(
+        self,
+        host: str,
+        port: int,
+    ):
         self.client: socket.socket = None
         self._server_address = (host, port)
 
@@ -15,7 +17,7 @@ class SocketClient:
     def start_listening(self):
         self.client.bind(self.__address)
         self.client.listen()
-        print(f'+ Server {self.__str__()} started.')
+        print(f"+ Server {self.__str__()} started.")
 
     def connect(self, address):
         self.client.connect(address)

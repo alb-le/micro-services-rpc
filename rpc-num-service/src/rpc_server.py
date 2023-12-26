@@ -13,26 +13,27 @@ class RpcServer:
         self.client: ServerClient = client
         self.my_functions = my_functions
 
-    def __multithread_handler(self, worker_socket: socket.socket, address: Tuple[str, int]):
+    def __multithread_handler(
+        self, worker_socket: socket.socket, address: Tuple[str, int]
+    ):
         try:
-            client_address = f'{address[0]}:{address[1]}'
-            print(f'Managing requests from {client_address}.')
+            client_address = f"{address[0]}:{address[1]}"
+            print(f"Managing requests from {client_address}.")
             while True:
-
                 try:
                     request = self.client.receive_message_to_worker(worker_socket)
-                    print(f'[INFO] {client_address} -> Request: {request}.')
+                    print(f"[INFO] {client_address} -> Request: {request}.")
                     response = self.my_functions.run_fn(request)
-                    print(f'[INFO] Response: {response}')
+                    print(f"[INFO] Response: {response}")
                     self.client.send(socket_=worker_socket, payload=response)
 
                 except DisconnectedException:
-                    print(f'[INFO] Client {client_address} disconnected.')
+                    print(f"[INFO] Client {client_address} disconnected.")
                     break
 
                 except Exception as ex:
-                    error_res = f'{str(ex)}\n\n{traceback.print_exc()}'
-                    print(f'[ERROR] {error_res}')
+                    error_res = f"{str(ex)}\n\n{traceback.print_exc()}"
+                    print(f"[ERROR] {error_res}")
                     self.client.send(socket_=worker_socket, payload=error_res)
                     raise ex
 
@@ -44,11 +45,13 @@ class RpcServer:
         while True:
             try:
                 client, address = self.client.accept()
-                Thread(target=self.__multithread_handler, args=[client, address]).start()
+                Thread(
+                    target=self.__multithread_handler, args=[client, address]
+                ).start()
 
             except KeyboardInterrupt:
                 self.client.close()
-                print(f'- Server {self.client} interrupted.')
+                print(f"- Server {self.client} interrupted.")
                 break
 
             except Exception as ex:

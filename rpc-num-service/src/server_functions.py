@@ -4,8 +4,8 @@ from typing import Any
 class FunctionsImplementation:
     def __init__(self):
         self.functions = {
-            'sum': self.__my_sum,
-            'min': self.__my_min,
+            "sum": self.__my_sum,
+            "min": self.__my_min,
         }
 
     @staticmethod
@@ -23,9 +23,9 @@ class FunctionsImplementation:
 
     @staticmethod
     def __get_request_obj(request):
-        fn_name = request.split('(')[0]
-        args = request[len(fn_name)+1:-1].strip(' ').split(',')
+        fn_name = request.split("(")[0]
+        args = request[len(fn_name) + 1 : -1].strip(" ").split(",")
         kwargs = {}
-        if fn_name == 'exit':
+        if fn_name == "exit":
             raise KeyboardInterrupt
         return fn_name, args, kwargs

@@ -9,7 +9,7 @@ class Client(SocketClient):
         super().__init__(host, port)
 
     def __str__(self):
-        return f'{self._server_address[0]}:{self._server_address[1]}'
+        return f"{self._server_address[0]}:{self._server_address[1]}"
 
     def handshake(self):
         self.get_socket()

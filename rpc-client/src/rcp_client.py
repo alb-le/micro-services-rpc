@@ -7,11 +7,11 @@ class RcpClientController:
 
     def run(self, i: str) -> str:
         self.client.handshake()
-        print(f'Started RCP as Client. Server address: {self.client}')
+        print(f"Started RCP as Client. Server address: {self.client}")
 
-        if i in 'exit':
+        if i in "exit":
             self.client.close()
-            print(f'[INFO] Bye.')
+            print(f"[INFO] Bye.")
             return
 
         try:
@@ -19,10 +19,10 @@ class RcpClientController:
 
         except KeyboardInterrupt:
             self.client.close()
-            print(f'[INFO] Server {self.client} interrupted.')
+            print(f"[INFO] Server {self.client} interrupted.")
 
         except Exception as ex:
-            print(f'[ERROR] Closing client because of an error:')
+            print(f"[ERROR] Closing client because of an error:")
             self.client.close()
             raise ex
 
@@ -35,9 +35,9 @@ class RcpClientController:
 
     @staticmethod
     def __get_input(s: str):
-        fn_name = s.split('(')[0]
-        args = s[len(fn_name)+1:-1].strip(' ').split(',')
+        fn_name = s.split("(")[0]
+        args = s[len(fn_name) + 1 : -1].strip(" ").split(",")
         kwargs = {}
-        if fn_name == 'exit':
+        if fn_name == "exit":
             raise KeyboardInterrupt
         return fn_name, args, kwargs

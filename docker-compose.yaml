@@ -8,13 +8,13 @@ services:
   num-service:
     build: ./rpc-num-service
     ports:
-      - 5052:5052
+      - 52
     hostname: num-service
 
   str-service:
     build: ./rpc-str-service
-    ports: 
-      - 5053:5053
+    ports:
+      - 53
     hostname: str-service
 
   client:
@@ -22,5 +22,7 @@ services:
     ports:
       - 5050:5050
     hostname: rpc-client
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
+    tty: true # docker run -t
+
+  redis:
+    - image: redis:latest
