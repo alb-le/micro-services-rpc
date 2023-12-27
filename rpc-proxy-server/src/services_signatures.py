@@ -2,10 +2,11 @@ from typing import Any, Tuple, List, Dict, Optional
 
 import config
 from src.clients.server_client import ServerClient
+from src.cache_controller import CacheController
 
 
 class ServicesSignatures:
-    def __init__(self, cache: dict):
+    def __init__(self, cache: CacheController):
         self.__num_functions = {
             "sum": self.__my_sum,
             "min": self.__my_min,
@@ -13,7 +14,7 @@ class ServicesSignatures:
         self.__str_functions = {
             "split": self.__my_split,
         }
-        self.__cached_responses = cache
+        self.__cache = cache
 
     def __help(self, *arg, **kwargs):
         return (
@@ -37,10 +38,10 @@ class ServicesSignatures:
         return res
 
     def run_fn(self, request: List):
-        function_type, function_name, args, kwargs = self.__get_call_signature(request)
-
-        if cached_res := self.__get_cached_response(function_name, args, kwargs):
+        if cached_res := self.__cache.get(request):
             return cached_res
+
+        function_type, function_name, args, kwargs = self.__get_call_signature(request)
 
         match function_type:
             case "help":
@@ -51,12 +52,12 @@ class ServicesSignatures:
 
             case "string":
                 res = self.__str_functions[function_name](*args, **kwargs)
-                self.__save_response_on_cache(function_name, args, kwargs, res)
+                self.__cache.set(request, res)
                 return res
 
             case "numeral":
                 res = self.__num_functions[function_name](*args, **kwargs)
-                self.__save_response_on_cache(function_name, args, kwargs, res)
+                self.__cache.set(request, res)
                 return res
 
     def __get_call_signature(
@@ -79,19 +80,6 @@ class ServicesSignatures:
         args = request[1]
         kwargs = request[2]
         return function_type, function_name, args, kwargs
-
-    def __get_cached_response(self, function_name, args, kwargs):
-        signature = self.__get_call_signature_as_str(function_name, args, kwargs)
-        return self.__cached_responses.get(signature, None)
-
-    @staticmethod
-    def __get_call_signature_as_str(function_name, args, kwargs) -> str:
-        return f"{function_name}{args}{kwargs}"
-
-    def __save_response_on_cache(self, function_name, args, kwargs, res):
-        self.__cached_responses[
-            self.__get_call_signature_as_str(function_name, args, kwargs)
-        ] = res
 
     @staticmethod
     def __call_num_service(fn_name, *args, **kwargs):

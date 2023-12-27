@@ -2,7 +2,7 @@ services:
   proxy-server:
     build: ./rpc-proxy-server
     ports:
-      - 5051:5051
+      - 5051
     hostname: proxy-server
 
   num-service:
@@ -19,10 +19,12 @@ services:
 
   client:
     build: ./rpc-client
-    ports:
-      - 5050:5050
     hostname: rpc-client
+    stdin_open: true # docker run -i
     tty: true # docker run -t
 
   redis:
     - image: redis:latest
+    - hostname: redis-cache
+    - ports:
+      - 6379
