@@ -2,7 +2,7 @@ services:
   proxy-server:
     build: ./rpc-proxy-server
     ports:
-      - 5051
+      - 51
     hostname: proxy-server
 
   num-service:
