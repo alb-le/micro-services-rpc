@@ -9,7 +9,7 @@ After docker finishes up, open the client in a new tab:
 docker exec -it micro-services-rpc-client-1 python3 client_handler.py
 ```
 
-Usuly tha client container name is ```micro-services-rpc-client-1 ``` but it can change. To look up the container name, just run ```docker container ls```.
+Usuly the client container name is ```micro-services-rpc-client-1 ``` but it can change. To look up the container name, just run ```docker container ls```.
 
 ## Video
 You can see a [video of the RPC in action](https://youtu.be/HKxhMgp4-vA).
