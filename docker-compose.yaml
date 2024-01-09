@@ -20,11 +20,11 @@ services:
   client:
     build: ./rpc-client
     hostname: rpc-client
-    stdin_open: true # docker run -i
-    tty: true # docker run -t
+#    stdin_open: true # docker run -i
+#    tty: true # docker run -t
 
-  redis:
-    - image: redis:latest
-    - hostname: redis-cache
-    - ports:
+  redis-cache:
+    image: redis:latest
+    hostname: redis-cache
+    ports:
       - 6379
